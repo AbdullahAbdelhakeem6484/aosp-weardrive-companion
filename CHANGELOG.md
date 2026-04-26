@@ -8,6 +8,7 @@
 - command runbook with build, boot, and validation commands
 - GitHub publishing guide
 - baseline tracking files
+- project validation script: `scripts/validate_project.sh`
 - workspace guard script and formal safety/isolation policy
 - feature summary workflow directory at `docs/summaries/`
 

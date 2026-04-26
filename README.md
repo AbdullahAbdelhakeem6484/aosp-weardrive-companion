@@ -65,6 +65,7 @@ Use this section as the main navigation map for the repo.
 ### 5. Scripts
 - [env_aosp16.sh](scripts/env_aosp16.sh)
 - [guard_workspace.sh](scripts/guard_workspace.sh)
+- [validate_project.sh](scripts/validate_project.sh)
 - [setup_workspace.sh](scripts/setup_workspace.sh)
 - [build_aosp16.sh](scripts/build_aosp16.sh)
 - [launch_cuttlefish.sh](scripts/launch_cuttlefish.sh)

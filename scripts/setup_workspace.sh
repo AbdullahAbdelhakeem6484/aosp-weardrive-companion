@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WORKSPACE_ROOT="/home/abdullah-abdelhakeem/EmbeddedAndroid_Workspace"
-PROJECT_ROOT="$WORKSPACE_ROOT/aosp-weardrive-companion"
-AOSP_ROOT="$WORKSPACE_ROOT/aosp_versions/aosp16"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/env_aosp16.sh"
 
 printf 'Project root: %s\n' "$PROJECT_ROOT"
 printf 'AOSP root: %s\n' "$AOSP_ROOT"
+printf 'Lunch target: %s\n' "$TARGET_LUNCH"
+printf 'CCACHE_DIR: %s\n' "$CCACHE_DIR"
 
 for dir in \
     "$PROJECT_ROOT/docs" \

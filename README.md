@@ -47,6 +47,7 @@ Use this section as the main navigation map for the repo.
 ### 1. Start and Execution
 - [Step-by-Step Guide](docs/implementation/step-by-step-guide.md)
 - [Command Runbook](docs/implementation/command-runbook.md)
+- [Safety and Isolation Policy](docs/policies/safety-and-isolation.md)
 
 ### 2. Architecture and Design
 - [MVP API and Event Model](docs/architecture/mvp-api-and-event-model.md)
@@ -62,6 +63,8 @@ Use this section as the main navigation map for the repo.
 - [GitHub Publishing Guide](docs/release/github-publishing-guide.md)
 
 ### 5. Scripts
+- [env_aosp16.sh](scripts/env_aosp16.sh)
+- [guard_workspace.sh](scripts/guard_workspace.sh)
 - [setup_workspace.sh](scripts/setup_workspace.sh)
 - [build_aosp16.sh](scripts/build_aosp16.sh)
 - [launch_cuttlefish.sh](scripts/launch_cuttlefish.sh)
@@ -77,7 +80,7 @@ Use this section as the main navigation map for the repo.
 We use **Cuttlefish Auto**, not phone.
 
 Default lunch target:
-- `aosp_cf_x86_64_auto-trunk_staging-userdebug`
+- `aosp_cf_x86_64_auto-bp2a-userdebug`
 
 Why this is the correct default:
 - better fit for your AAOS background

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-AOSP_ROOT="/home/abdullah-abdelhakeem/EmbeddedAndroid_Workspace/aosp_versions/aosp16"
-TARGET_PRODUCT="aosp_cf_x86_64_auto"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/env_aosp16.sh"
 
 cd "$AOSP_ROOT"
 source build/envsetup.sh
-lunch "$TARGET_PRODUCT-trunk_staging-userdebug"
+lunch "$TARGET_LUNCH"
 m -j"$(nproc)"

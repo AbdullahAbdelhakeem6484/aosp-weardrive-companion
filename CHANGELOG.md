@@ -10,6 +10,7 @@
 - baseline tracking files
 - workspace guard script and formal safety/isolation policy
 - feature summary workflow directory at `docs/summaries/`
+- project validation script: `scripts/validate_project.sh`
 
 ### Changed
 - repository name updated to `aosp-weardrive-companion`

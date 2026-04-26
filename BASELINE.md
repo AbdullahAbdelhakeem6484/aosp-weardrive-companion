@@ -11,10 +11,11 @@ This file tracks the baseline state of the `aosp-weardrive-companion` repository
 
 ### Working mode
 - daily workflow is centered on root docs:
-  - `task.md`
-  - `analysis.md`
-  - `implementation.md`
-  - `concepts.md`
+  - `00_README.md`
+  - `01_tasks.md`
+  - `02_analysis.md`
+  - `03_implementation.md`
+  - `04_concepts.md`
 - previous long-form materials are preserved in `docs/archive/`
 
 ### Documentation baseline

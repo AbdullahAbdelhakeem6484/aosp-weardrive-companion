@@ -18,10 +18,13 @@
 - scripts now share centralized environment config and ccache isolation under `out/.ccache`
 - root execution docs: `task.md`, `analysis.md`, `implementation.md`, `concepts.md`
 - archive index at `docs/archive/README.md`
+- ordered root docs: `00_README.md`, `01_tasks.md`, `02_analysis.md`, `03_implementation.md`, `04_concepts.md`
+- lightweight `README.md` that points to ordered docs
 
 ### Simplified
 - daily navigation now focuses on root docs and essential scripts
 - previous detailed docs moved under `docs/archive/` for reference
+- feature plan now includes branch-per-feature then final merge to `main`
 
 ### Runtime
 - default target is `aosp_cf_x86_64_auto-bp2a-userdebug`

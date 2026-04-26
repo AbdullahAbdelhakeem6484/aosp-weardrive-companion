@@ -1,33 +1,10 @@
 # aosp-weardrive-companion
 
-Clean working mode for fast, guided implementation.
+Primary entry point:
+- [00_README.md](00_README.md)
 
-## Open Order
-
-1. [task.md](task.md)
-2. [analysis.md](analysis.md)
-3. [implementation.md](implementation.md)
-4. [concepts.md](concepts.md)
-
-## Important Files
-
-- [scripts/env_aosp16.sh](scripts/env_aosp16.sh)
-- [scripts/guard_workspace.sh](scripts/guard_workspace.sh)
-- [scripts/build_aosp16.sh](scripts/build_aosp16.sh)
-- [scripts/launch_cuttlefish.sh](scripts/launch_cuttlefish.sh)
-- [scripts/capture_logs.sh](scripts/capture_logs.sh)
-- [CHANGELOG.md](CHANGELOG.md)
-- [BASELINE.md](BASELINE.md)
-
-## First Commands
-
-```bash
-cd ~/EmbeddedAndroid_Workspace/aosp-weardrive-companion
-source scripts/env_aosp16.sh
-bash scripts/guard_workspace.sh
-```
-
-## Notes
-
-- Day-to-day work is now centered on the 4 root docs.
-- Previous long-form material is preserved under `docs/archive/`.
+Execution files:
+- [01_tasks.md](01_tasks.md)
+- [02_analysis.md](02_analysis.md)
+- [03_implementation.md](03_implementation.md)
+- [04_concepts.md](04_concepts.md)

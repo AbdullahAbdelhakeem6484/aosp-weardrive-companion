@@ -16,6 +16,12 @@
 - README turned into a start page with navigation and implementation order
 - workspace scripts updated to the new project path
 - scripts now share centralized environment config and ccache isolation under `out/.ccache`
+- root execution docs: `task.md`, `analysis.md`, `implementation.md`, `concepts.md`
+- archive index at `docs/archive/README.md`
+
+### Simplified
+- daily navigation now focuses on root docs and essential scripts
+- previous detailed docs moved under `docs/archive/` for reference
 
 ### Runtime
 - default target is `aosp_cf_x86_64_auto-bp2a-userdebug`

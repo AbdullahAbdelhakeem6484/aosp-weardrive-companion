@@ -23,7 +23,10 @@ export WORKSPACE_ROOT="$HOME/EmbeddedAndroid_Workspace"
 export PROJECT_ROOT="$WORKSPACE_ROOT/aosp-weardrive-companion"
 export AOSP_ROOT="$WORKSPACE_ROOT/aosp_versions/aosp16"
 export TARGET_PRODUCT="aosp_cf_x86_64_auto"
-export TARGET_LUNCH="$TARGET_PRODUCT-trunk_staging-userdebug"
+export TARGET_LUNCH="$TARGET_PRODUCT-bp2a-userdebug"
+export CCACHE_DIR="$AOSP_ROOT/out/.ccache"
+export CCACHE_TEMPDIR="$AOSP_ROOT/out/.ccache/tmp"
+mkdir -p "$CCACHE_DIR" "$CCACHE_TEMPDIR"
 ```
 
 ## 2. First-Time Session Start
@@ -31,6 +34,10 @@ export TARGET_LUNCH="$TARGET_PRODUCT-trunk_staging-userdebug"
 Open a shell and run:
 
 ```bash
+cd "$PROJECT_ROOT"
+source ./scripts/env_aosp16.sh
+./scripts/guard_workspace.sh
+
 cd "$AOSP_ROOT"
 source build/envsetup.sh
 lunch "$TARGET_LUNCH"
@@ -46,6 +53,46 @@ echo "$TARGET_BUILD_VARIANT"
 Expected:
 - product should be `aosp_cf_x86_64_auto`
 - variant should be `userdebug`
+
+## 2.1 Fix the `~/.ccache/tmp` Read-Only Failure
+
+If you hit an error like:
+
+```text
+ccache: error: failed to create temporary file for /home/.../.ccache/tmp/...
+Read-only file system
+```
+
+use this fix before building:
+
+```bash
+export CCACHE_DIR="$AOSP_ROOT/out/.ccache"
+export CCACHE_TEMPDIR="$AOSP_ROOT/out/.ccache/tmp"
+mkdir -p "$CCACHE_DIR" "$CCACHE_TEMPDIR"
+```
+
+Then continue with:
+
+```bash
+cd "$AOSP_ROOT"
+source build/envsetup.sh
+lunch "$TARGET_LUNCH"
+m -j"$(nproc)"
+```
+
+Fallback if you want to bypass ccache entirely for one build:
+
+```bash
+export CCACHE_EXEC=""
+cd "$AOSP_ROOT"
+source build/envsetup.sh
+lunch "$TARGET_LUNCH"
+m -j"$(nproc)"
+```
+
+Recommended approach:
+- prefer moving `ccache` into `out/` because it stays writable and keeps incremental build benefits
+- use `CCACHE_EXEC=""` only as a temporary escape hatch
 
 ## 3. Build Commands
 
@@ -93,6 +140,35 @@ source build/envsetup.sh
 lunch "$TARGET_LUNCH"
 launch_cvd
 ```
+
+
+### Launch Cuttlefish (using built host tools)
+```bash
+# From the AOSP root, point to your built product
+export ANDROID_PRODUCT_OUT=$PWD/out/target/product/vsoc_x86_64_only
+
+# Start
+out/host/linux-x86/bin/launch_cvd --daemon
+
+# Check status
+out/host/linux-x86/bin/run_cvd status || cvd status
+
+# Stop
+out/host/linux-x86/bin/stop_cvd || cvd stop
+```
+
+If you see overlay/runtime errors or "no device":
+```bash
+cvd stop || true
+rm -rf /tmp/cf_avd_* ~/.local/share/cuttlefish*
+out/host/linux-x86/bin/launch_cvd --daemon
+```
+
+### Cuttlefish Features
+- Full Android emulator with Google Play Services
+- Hardware acceleration support
+- Network connectivity
+- Camera and sensor simulation
 
 Validate device visibility:
 
@@ -145,6 +221,7 @@ adb logcat | rg "WearDrive|VehicleContext|SystemServer|Bluetooth|MediaSession"
 
 ```bash
 cd "$PROJECT_ROOT"
+source ./scripts/env_aosp16.sh
 ./scripts/build_aosp16.sh
 ./scripts/launch_cuttlefish.sh
 ./scripts/capture_logs.sh

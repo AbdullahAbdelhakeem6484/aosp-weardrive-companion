@@ -1,6 +1,6 @@
 # 03_implementation.md
 
-Full implementation plan and execution commands.
+Full implementation plan with branch-per-feature delivery.
 
 ## Core Workflow
 
@@ -20,14 +20,17 @@ For every feature:
 - `feature/02-project-validation-script`
 - `feature/03-smoke-test-runner`
 - `feature/04-env-verification`
-- `feature/05-build-workflow-cleanup`
-- `feature/06-cuttlefish-launch-validation`
-- `feature/07-log-capture-validation`
-- `feature/08-mvp-api-event-model`
-- `feature/09-architecture-cleanup`
-- `feature/10-demo-validation`
-- `feature/11-github-readiness`
-- `feature/12-course-summary-system`
+- `feature/05-build-launch-cleanup`
+- `feature/06-app-layer-mvp`
+- `feature/07-framework-api-contract`
+- `feature/08-system-service-contract`
+- `feature/09-aidl-contract`
+- `feature/10-hal-strategy`
+- `feature/11-kernel-touchpoints`
+- `feature/12-bootloader-strategy`
+- `feature/13-demo-validation`
+- `feature/14-github-enterprise-readiness`
+- `feature/15-course-summary-system`
 
 ## Pre-Feature Safety Gate
 
@@ -56,95 +59,67 @@ bash -n scripts/*.sh
 
 ## Implementation Plan by Feature
 
-## Feature 02
+## Foundation Features
 
-Build:
-- `scripts/validate_project.sh`
+### Feature 02
+- Build: `scripts/validate_project.sh`
+- Validate: pass/fail report output
 
-Validate:
-- run script and confirm pass/fail summary
+### Feature 03
+- Build: `scripts/run_smoke_tests.sh`
+- Validate: all smoke sections run
 
-## Feature 03
+### Feature 04
+- Build: `scripts/verify_env.sh`
+- Validate: tools + target checks pass
 
-Build:
-- `scripts/run_smoke_tests.sh`
+### Feature 05
+- Build: normalize build/launch scripts
+- Validate: `bash -n scripts/*.sh` and dry-run checks
 
-Validate:
-- run on clean shell and confirm all sections report
+## High-Value Stack Features
 
-## Feature 04
+### Feature 06 (App)
+- Build: app MVP contract + prototype stub in repo
+- Validate: spec completeness and scenario mapping
 
-Build:
-- `scripts/verify_env.sh`
+### Feature 07 (Framework)
+- Build: framework manager contract and model interfaces
+- Validate: API surface review checklist
 
-Validate:
-- confirm tool and target checks
+### Feature 08 (System Service)
+- Build: service contract and lifecycle/state model
+- Validate: ownership and callback flow review
 
-## Feature 05
+### Feature 09 (AIDL)
+- Build: AIDL contract drafts
+- Validate: compatibility + minimality checks
 
-Build:
-- streamline script messages and shared helpers
+### Feature 10 (HAL)
+- Build: HAL strategy and mock adapter mapping
+- Validate: signal mapping coverage
 
-Validate:
-- `bash -n scripts/*.sh`
-- dry-run flow of build/launch scripts
+### Feature 11 (Kernel)
+- Build: kernel touchpoint analysis and trigger criteria
+- Validate: justification checklist
 
-## Feature 06
+### Feature 12 (Bootloader)
+- Build: bootloader/security startup strategy
+- Validate: risk and necessity matrix
 
-Build:
-- launch checks and post-launch verification steps
+## Release and Teaching Features
 
-Validate:
-- `adb devices`
-- `adb shell getprop sys.boot_completed`
+### Feature 13
+- Build: deterministic demo validation checklist
+- Validate: scenario dry-run evidence
 
-## Feature 07
+### Feature 14
+- Build: enterprise/GitHub review checklist
+- Validate: readiness pass
 
-Build:
-- improve log capture naming and consistency
-
-Validate:
-- confirm logs written to expected output path
-
-## Feature 08
-
-Build:
-- tighten MVP API/event contract docs for coding handoff
-
-Validate:
-- review completeness against first coding feature needs
-
-## Feature 09
-
-Build:
-- concise architecture execution view
-
-Validate:
-- architecture matches API/event model and scripts
-
-## Feature 10
-
-Build:
-- scenario-by-scenario validation checklist
-
-Validate:
-- execute checklist and capture evidence
-
-## Feature 11
-
-Build:
-- GitHub review readiness checklist
-
-Validate:
-- self-review pass
-
-## Feature 12
-
-Build:
-- summary template and feature-to-lesson map
-
-Validate:
-- generate at least one example lesson-ready summary
+### Feature 15
+- Build: feature summaries and course lesson mapping
+- Validate: one complete sample lesson package
 
 ## Push and Merge Commands
 

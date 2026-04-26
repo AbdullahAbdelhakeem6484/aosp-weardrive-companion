@@ -19,6 +19,17 @@ So GitHub `main` will not show those commits until we merge and push `main`.
 3. [03_implementation.md](03_implementation.md)
 4. [04_concepts.md](04_concepts.md)
 
+## Project Value Focus
+
+This project now explicitly covers valuable stack features:
+- app layer
+- framework API
+- system service
+- AIDL contract
+- HAL strategy
+- kernel touchpoint strategy
+- bootloader/security strategy
+
 ## Important Operational Files
 
 - [scripts/env_aosp16.sh](scripts/env_aosp16.sh)

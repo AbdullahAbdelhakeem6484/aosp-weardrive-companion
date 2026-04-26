@@ -17,6 +17,9 @@ Concept reference for fast mentoring during implementation.
 - Log-based debugging discipline
 - Contract-first service/API design
 - System boundary ownership (app/framework/service)
+- AIDL interface stability and versioning
+- HAL adapter strategy and mock-first development
+- kernel/bootloader change justification criteria
 
 ## Quality Concepts
 

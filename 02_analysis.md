@@ -1,238 +1,237 @@
 # 02_analysis.md
 
-Feature-by-feature analysis for MVP completion.
+Feature-by-feature analysis, including concepts under each feature.
 
 ## Global Constraints
 
 - Do not modify AOSP source directly without explicit approval.
 - Keep implementation orchestration in this repository.
-- Validate each feature before moving forward.
+- Use prototypes/contracts first, then approved AOSP integration.
 
 ## Feature 01 Analysis: Safety Rules and Workspace Isolation
 
 Problem:
-- High risk of path confusion and accidental writes.
-
-Current state:
-- Implemented and validated.
+- Path confusion and accidental modifications.
 
 Concepts:
-- Environment isolation
-- Safety gate before operations
-- Reproducible setup
+- Workspace isolation
+- Environment contracts
+- Preflight safety checks
 
-OEM notes:
-- This is mandatory for auditability and onboarding.
+Value:
+- Prevents costly mistakes before platform work starts.
 
 ## Feature 02 Analysis: Project Validation Script
 
 Problem:
-- Manual checks are error-prone and inconsistent.
-
-What we need:
-- Single command to verify repository health.
+- Manual repo checks are unreliable.
 
 Concepts:
 - Shift-left validation
-- Deterministic preflight checks
-- Fast feedback loop
+- Deterministic CI-like local checks
 
-Risks:
-- False positives if script is too strict.
-
-Mitigation:
-- Keep checks practical and clearly messaged.
+Value:
+- Faster and safer iteration for every future feature.
 
 ## Feature 03 Analysis: Smoke Test Runner
 
 Problem:
-- No quick confidence check after changes.
-
-What we need:
-- 30-90 second smoke test script.
+- No quick confidence gate after changes.
 
 Concepts:
-- Smoke testing vs full testing
-- Operational confidence gates
+- Smoke testing
+- Operational confidence
 
-Risks:
-- Overloading smoke tests with slow checks.
-
-Mitigation:
-- Keep smoke tests minimal and fast.
+Value:
+- Catch regressions early without full builds.
 
 ## Feature 04 Analysis: AOSP16 Environment Verification
 
 Problem:
-- Subtle environment drift can break builds.
-
-What we need:
-- Script to verify tools, paths, and target.
+- Environment drift causes unstable builds.
 
 Concepts:
-- Environment determinism
+- Toolchain verification
 - Build reproducibility
 
-Risks:
-- Tool path differences across systems.
+Value:
+- Stable baseline for all stack features.
 
-Mitigation:
-- Check required essentials only.
-
-## Feature 05 Analysis: Build Workflow Cleanup
+## Feature 05 Analysis: Build and Launch Cleanup
 
 Problem:
-- Inconsistent build entry points increase confusion.
-
-What we need:
-- One clear build flow and script conventions.
+- Build/launch behavior is not unified.
 
 Concepts:
-- Build orchestration
 - Script idempotency
+- Command ergonomics
 
-Risks:
-- Breaking existing working path.
+Value:
+- Predictable day-to-day developer workflow.
 
-Mitigation:
-- Refactor incrementally with validation.
-
-## Feature 06 Analysis: Cuttlefish Launch Workflow Validation
+## Feature 06 Analysis: App Layer MVP
 
 Problem:
-- “Launch succeeded” does not always mean usable runtime.
-
-What we need:
-- post-launch checks for boot completion and device readiness.
+- No visible product layer yet.
 
 Concepts:
-- Runtime readiness
-- Virtual device operational checks
+- Privileged app design
+- State-driven UI cards
+- Debug surface design
 
-Risks:
-- Flaky checks due to timing.
+Value:
+- First user-facing proof of product.
 
-Mitigation:
-- Add retry loops with clear timeout.
+OEM considerations:
+- clear separation between debug UI and user UI
+- robust empty/error states
 
-## Feature 07 Analysis: Log Capture Workflow Validation
+## Feature 07 Analysis: Framework API Contract
 
 Problem:
-- Logs are not consistently captured per feature.
-
-What we need:
-- predictable log collection and naming.
+- App-service communication contract is not strict enough.
 
 Concepts:
-- Observability
-- Traceability for debugging
+- Framework manager API design
+- Stability and versioning
+- Minimal API surface
 
-Risks:
-- Large or noisy log artifacts.
+Value:
+- Foundation for maintainable platform integration.
 
-Mitigation:
-- Scope log captures and keep indexing simple.
+OEM considerations:
+- avoid exposing transport internals in framework API
+- enforce permission model at API boundary
 
-## Feature 08 Analysis: MVP API/Event Model Cleanup
+## Feature 08 Analysis: System Service Contract
 
 Problem:
-- Current contract is conceptual, not strict enough for coding.
-
-What we need:
-- concrete event definitions, ownership boundaries, and payload shape.
+- No authoritative service behavior contract.
 
 Concepts:
-- Contract-first design
-- API minimalism
-- Event-driven modeling
+- Service lifecycle
+- State ownership
+- Binder listener management
 
-Risks:
-- Overdesign too early.
+Value:
+- Enables consistent behavior and testability.
 
-Mitigation:
-- Keep MVP contract narrow and extensible.
+OEM considerations:
+- define thread model and synchronization assumptions early
+- plan for service restart behavior
 
-## Feature 09 Analysis: System Architecture Cleanup
+## Feature 09 Analysis: AIDL Contract
 
 Problem:
-- Long-form architecture docs are harder to execute from.
-
-What we need:
-- concise implementation-facing architecture map.
+- IPC surface is undefined for implementation.
 
 Concepts:
-- Separation of concerns
-- Layered ownership
+- AIDL interface design
+- Parcelable model design
+- Backward compatibility planning
 
-Risks:
-- Removing useful context.
+Value:
+- Clear IPC contract and implementation map.
 
-Mitigation:
-- Keep archive as reference, write concise execution architecture.
+OEM considerations:
+- keep AIDL minimal and version-conscious
+- explicit error/status signaling
 
-## Feature 10 Analysis: Demo Scenario Validation
+## Feature 10 Analysis: HAL Strategy
 
 Problem:
-- Demos can fail without deterministic scenario checks.
-
-What we need:
-- exact preconditions, commands, and expected outcomes.
+- No bridge from platform services to hardware abstraction.
 
 Concepts:
-- Deterministic demos
-- Product storytelling through engineering evidence
+- HAL boundary ownership
+- Adapter pattern (mock vs real HAL)
+- Vehicle signal mapping
 
-Risks:
-- Manual demo steps drift over time.
+Value:
+- Connects project to true embedded value, not just app logic.
 
-Mitigation:
-- Script as much as possible and version scenario definitions.
+OEM considerations:
+- isolate HAL-specific assumptions
+- support emulator-first with deterministic mock path
 
-## Feature 11 Analysis: GitHub Publishing Readiness
+## Feature 11 Analysis: Kernel Touchpoint Strategy
 
 Problem:
-- Technical work can look weak if repo quality is inconsistent.
-
-What we need:
-- clean docs entry, no secrets, visible implementation flow.
+- Kernel work is often mentioned but rarely justified.
 
 Concepts:
-- Developer experience (DX)
-- Public engineering credibility
+- Driver boundary analysis
+- Kernel/userspace contract
+- Performance and timing considerations
 
-Risks:
-- exposing non-public material.
+Value:
+- Shows mature engineering judgment on when kernel changes are necessary.
 
-Mitigation:
-- include checklist and explicit exclusions.
+OEM considerations:
+- change kernel only for real technical necessity
+- define measurable reason before implementation
 
-## Feature 12 Analysis: Course-Ready Summary Generation
+## Feature 12 Analysis: Bootloader Strategy
 
 Problem:
-- Knowledge may stay implicit and hard to teach later.
-
-What we need:
-- standard summary after each feature.
+- Bootloader is high-risk and often overused in demos.
 
 Concepts:
-- Knowledge capture
-- Instructional design for engineering projects
+- Verified boot chain
+- Boot-time configuration
+- Security startup constraints
 
-Risks:
-- summaries become too long or inconsistent.
+Value:
+- Demonstrates security-aware architecture maturity.
 
-Mitigation:
-- enforce compact template per feature.
+OEM considerations:
+- bootloader changes should be treated as advanced phase, not MVP default
+
+## Feature 13 Analysis: Demo Validation
+
+Problem:
+- Non-deterministic demos damage credibility.
+
+Concepts:
+- Deterministic scenario testing
+- Evidence capture
+
+Value:
+- Reliable technical storytelling for managers/public audience.
+
+## Feature 14 Analysis: GitHub and Enterprise Readiness
+
+Problem:
+- Great code can fail review if repository quality is weak.
+
+Concepts:
+- Repository information architecture
+- Review ergonomics
+
+Value:
+- Stronger hiring and enterprise review outcomes.
+
+## Feature 15 Analysis: Course-Ready Summary Generation
+
+Problem:
+- Knowledge is not automatically teachable.
+
+Concepts:
+- Knowledge capture pipeline
+- Feature-to-lesson mapping
+
+Value:
+- Direct path from project delivery to Udemy-quality material.
 
 ## Dependency Order
 
-1. F01 -> F02 -> F03 -> F04
-2. F05 -> F06 -> F07
-3. F08 -> F09 -> F10
-4. F11 -> F12
+1. F01 -> F02 -> F03 -> F04 -> F05
+2. F06 -> F07 -> F08 -> F09
+3. F10 -> F11 -> F12
+4. F13 -> F14 -> F15
 
 ## Today Priorities
 
-1. Feature 02
-2. Feature 03
-3. Feature 04
+1. Feature 02: Project validation script
+2. Feature 03: Smoke test runner
+3. Feature 06 planning stub: App layer MVP contract
